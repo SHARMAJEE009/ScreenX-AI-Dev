@@ -9,7 +9,6 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
   ResponsiveContainer,
 } from 'recharts';
 import { apiService } from '@/services/api';
@@ -98,7 +97,7 @@ export default function Analytics() {
                 fill="#8884d8"
                 dataKey="count"
               >
-                {analytics.shortlistedVsRejected.map((entry, index) => (
+                {analytics.shortlistedVsRejected.map((index) => (
                   <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                 ))}
               </Pie>
