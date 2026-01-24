@@ -9,6 +9,14 @@ import EmptyState from '@/components/EmptyState';
 import CandidateDetailsModal from '@/components/CandidateDetailsModal';
 import { toast } from '@/utils/toast';
 
+type FilterOptions = {
+  search?: string;
+  position?: string;
+  shortListed?: string;
+  location?: string;
+};
+
+
 export default function Candidates() {
   const [candidates, setCandidates] = useState<Candidate[]>([]);
   const [allCandidates, setAllCandidates] = useState<Candidate[]>([]);

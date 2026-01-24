@@ -212,17 +212,17 @@ const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 const WEBHOOK_URL =
   "https://n8n.srv982383.hstgr.cloud/webhook/3fe63309-ad48-4e04-a403-81102bfbe701";
 
-type WebhookCandidate = {
-  id: number;
-  full_name: string;
-  phone_number: string;
-  email: string;
-  location: string;
-  position_applied: string;
-  short_listed: "YES" | "NO" | "PENDING";
-  reason: string;
-  created_at: string;
-};
+// type WebhookCandidate = {
+//   id: number;
+//   full_name: string;
+//   phone_number: string;
+//   email: string;
+//   location: string;
+//   position_applied: string;
+//   short_listed: "YES" | "NO" | "PENDING";
+//   reason: string;
+//   created_at: string;
+// };
 
 class ApiService {
   private candidates: Candidate[] = [];
@@ -366,12 +366,13 @@ class ApiService {
     pageSize: number = 10
   ): Promise<{ data: Candidate[]; total: number }> {
     return this.getCandidates(
-      { ...filters, shortListed: "YES" },
-      undefined,
-      undefined,
-      page,
-      pageSize
-    );
+  { ...filters, shortListed: "YES" as const },
+  undefined,
+  undefined,
+  page,
+  pageSize
+);
+
   }
 
   async getRejectedCandidates(
@@ -380,7 +381,7 @@ class ApiService {
     pageSize: number = 10
   ): Promise<{ data: Candidate[]; total: number }> {
     return this.getCandidates(
-      { ...filters, shortListed: "NO" },
+      { ...filters, shortListed: "NO" as const },
       undefined,
       undefined,
       page,
