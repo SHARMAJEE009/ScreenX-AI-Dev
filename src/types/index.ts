@@ -26,8 +26,8 @@ export type SortField = 'Full_Name' | 'Position_Applied' | 'Short_Listed';
 export type SortDirection = 'asc' | 'desc';
 
 export interface FilterOptions {
-  search: string;
-  position: string;
-  shortListed: string;
-  location: string;
+ search?: string;
+  location?: string;
+  position?: string;
+  shortListed?: "YES" | "NO";
 }

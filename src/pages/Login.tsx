@@ -1,7 +1,8 @@
 import { useState, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { Mail, Lock, EyeOff, ArrowRight } from "lucide-react";
+import { Mail, Lock, ArrowRight } from "lucide-react";
+import { v4 as uuidv4 } from 'uuid';
 
 const Login: React.FC = () => {
   const navigate = useNavigate();
@@ -17,15 +18,15 @@ const Login: React.FC = () => {
     setLoading(true);
 
     try {
-      // const response = await axios.post("/api/auth/login", {
-      //   email,
-      //   password,
-      // });
+      await axios.post("https://n8n.srv982383.hstgr.cloud/webhook/7630ecaf-d839-4b98-ba96-a5774a85d224", {
+        email_id:email,
+        password,
+      });
 
       // console.log("Login Success:", response.data);
 
-      // localStorage.setItem("token", response.data.token);
-      // localStorage.setItem("user", JSON.stringify(response.data.user));
+      localStorage.setItem("token", uuidv4());
+    
 
       navigate("/");
     } catch (err: any) {
@@ -117,7 +118,7 @@ const Login: React.FC = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />
-              <EyeOff className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4 cursor-pointer" />
+              {/* <EyeOff className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4 cursor-pointer" /> */}
             </div>
 
             <button

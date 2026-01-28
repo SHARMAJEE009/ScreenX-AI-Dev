@@ -7,22 +7,21 @@ const Signup: React.FC = () => {
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
+    first_name: "",
+    last_name: "",
     gender: "",
     age: "",
-    email: "",
-    phone: "",
+    email_id: "",
+    phone_number: "",
     password: "",
-    imageUrl: "",
-    firmType: "",
+    type_of_firm: "",
   });
 
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -33,10 +32,13 @@ const Signup: React.FC = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post("/api/auth/signup", {
-        ...formData,
-        age: Number(formData.age),
-      });
+      const response = await axios.post(
+        "https://n8n.srv982383.hstgr.cloud/webhook/374163d8-4e02-4985-a896-8065c9101069",
+        {
+          ...formData,
+          age: Number(formData.age),
+        },
+      );
 
       console.log("Signup Success:", response.data);
 
@@ -46,7 +48,7 @@ const Signup: React.FC = () => {
       navigate("/login");
     } catch (err: any) {
       setError(
-        err?.response?.data?.message || "Signup failed. Please try again."
+        err?.response?.data?.message || "Signup failed. Please try again.",
       );
     } finally {
       setLoading(false);
@@ -93,23 +95,20 @@ const Signup: React.FC = () => {
             <p className="text-red-500 text-center text-sm mb-4">{error}</p>
           )}
 
-          <form
-            onSubmit={handleSubmit}
-            className="grid grid-cols-2 gap-4"
-          >
+          <form onSubmit={handleSubmit} className="grid grid-cols-2 gap-4">
             <input
-              name="firstName"
+              name="first_name"
               placeholder="First Name"
               className="input"
-              value={formData.firstName}
+              value={formData.first_name}
               onChange={handleChange}
               required
             />
             <input
-              name="lastName"
+              name="last_name"
               placeholder="Last Name"
               className="input"
-              value={formData.lastName}
+              value={formData.last_name}
               onChange={handleChange}
               required
             />
@@ -139,19 +138,19 @@ const Signup: React.FC = () => {
             />
 
             <input
-              name="email"
+              name="email_id"
               placeholder="Email"
               className="input col-span-2"
-              value={formData.email}
+              value={formData.email_id}
               onChange={handleChange}
               required
             />
 
             <input
-              name="phone"
+              name="phone_number"
               placeholder="Phone Number"
               className="input col-span-2"
-              value={formData.phone}
+              value={formData.phone_number}
               onChange={handleChange}
               required
             />
@@ -167,9 +166,9 @@ const Signup: React.FC = () => {
             />
 
             <select
-              name="firmType"
+              name="type_of_firm"
               className="input col-span-2"
-              value={formData.firmType}
+              value={formData.type_of_firm}
               onChange={handleChange}
               required
             >

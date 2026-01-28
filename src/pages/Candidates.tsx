@@ -9,12 +9,12 @@ import EmptyState from '@/components/EmptyState';
 import CandidateDetailsModal from '@/components/CandidateDetailsModal';
 import { toast } from '@/utils/toast';
 
-type FilterOptions = {
-  search?: string;
-  position?: string;
-  shortListed?: string;
-  location?: string;
-};
+// type FilterOptions = {
+//   search?: string;
+//   position?: string;
+//   shortListed?: string;
+//   location?: string;
+// };
 
 
 export default function Candidates() {
@@ -24,7 +24,7 @@ export default function Candidates() {
   const [filters, setFilters] = useState<FilterOptions>({
     search: '',
     position: '',
-    shortListed: '',
+    shortListed: undefined,
     location: '',
   });
   const [sortField, setSortField] = useState<SortField | undefined>();
