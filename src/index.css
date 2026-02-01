@@ -72,3 +72,14 @@
     }
   }
 }
+
+
+@keyframes float {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(30px); }
+  100% { transform: translateX(0); }
+}
+
+.cloud-float {
+  animation: float 14s ease-in-out infinite;
+}
