@@ -28,6 +28,14 @@ export type SortDirection = 'asc' | 'desc';
 export interface FilterOptions {
   search: string;
   position: string;
-  shortListed: string;
+    shortListed: "YES" | "NO" | "PENDING" | "";
   location: string;
 }
+
+
+export const EMPTY_FILTERS: FilterOptions = {
+  search: "",
+  position: "",
+  location: "",
+  shortListed: "",
+};

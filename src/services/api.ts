@@ -204,6 +204,8 @@
 // }
 
 // export const apiService = new ApiService();
+import { EMPTY_FILTERS } from "@/types";
+
 import { Candidate, Analytics, FilterOptions, SortField, SortDirection } from "@/types";
 
 // Simulate API delay (optional)
@@ -366,7 +368,11 @@ class ApiService {
     pageSize: number = 10
   ): Promise<{ data: Candidate[]; total: number }> {
     return this.getCandidates(
-  { ...filters, shortListed: "YES" as const },
+  {
+      ...EMPTY_FILTERS,
+      ...filters,
+      shortListed: "YES",
+    },
   undefined,
   undefined,
   page,
@@ -381,7 +387,11 @@ class ApiService {
     pageSize: number = 10
   ): Promise<{ data: Candidate[]; total: number }> {
     return this.getCandidates(
-      { ...filters, shortListed: "NO" as const },
+      {
+      ...EMPTY_FILTERS,
+      ...filters,
+      shortListed: "NO",
+    },
       undefined,
       undefined,
       page,

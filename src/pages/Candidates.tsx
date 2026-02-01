@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ChevronLeft, ChevronRight, ChevronUp, ChevronDown, Eye } from 'lucide-react';
 import { apiService } from '@/services/api';
-import { Candidate, FilterOptions, SortField, SortDirection } from '@/types';
+import { Candidate, SortField, SortDirection, FilterOptions } from '@/types';
 import SearchFilterBar from '@/components/SearchFilterBar';
 import Badge from '@/components/Badge';
 import { TableSkeleton } from '@/components/LoadingSkeleton';
@@ -9,12 +9,6 @@ import EmptyState from '@/components/EmptyState';
 import CandidateDetailsModal from '@/components/CandidateDetailsModal';
 import { toast } from '@/utils/toast';
 
-type FilterOptions = {
-  search?: string;
-  position?: string;
-  shortListed?: string;
-  location?: string;
-};
 
 
 export default function Candidates() {
@@ -45,7 +39,7 @@ export default function Candidates() {
   useEffect(() => {
     const loadAllCandidates = async () => {
       try {
-        const result = await apiService.getCandidates({}, undefined, undefined, 1, 1000);
+        const result = await apiService.getCandidates({} as any, undefined, undefined, 1, 1000);
         setAllCandidates(result.data);
       } catch (error) {
         console.error('Failed to load all candidates for filters:', error);
@@ -66,7 +60,7 @@ export default function Candidates() {
     setLoading(true);
     try {
       const result = await apiService.getCandidates(
-        filters,
+        filters as any|| {},
         sortField,
         sortDirection,
         currentPage,

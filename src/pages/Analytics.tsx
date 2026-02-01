@@ -97,8 +97,14 @@ export default function Analytics() {
                 fill="#8884d8"
                 dataKey="count"
               >
-                {analytics.shortlistedVsRejected.map((index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                {analytics.shortlistedVsRejected.map((entry, index) => (
+                 <>
+                 <p className=''>
+                  {entry.status}: {entry.count}
+                 </p>
+                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                 </>
+
                 ))}
               </Pie>
               <Tooltip />

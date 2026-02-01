@@ -22,7 +22,18 @@ export default function Dashboard() {
     try {
       const [analyticsData, candidatesData] = await Promise.all([
         apiService.getAnalytics(),
-        apiService.getCandidates({}, undefined, undefined, 1, 5),
+        apiService.getCandidates(
+  {
+    search: "",
+    position: "",
+    shortListed: "",
+    location: "",
+  },
+  undefined,
+  undefined,
+  1,
+  5
+),
       ]);
       setAnalytics(analyticsData);
       setRecentCandidates(candidatesData.data);
