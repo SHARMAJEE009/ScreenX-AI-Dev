@@ -26,17 +26,10 @@ export type SortField = 'Full_Name' | 'Position_Applied' | 'Short_Listed';
 export type SortDirection = 'asc' | 'desc';
 
 export interface FilterOptions {
-<<<<<<< HEAD
-  search: string;
-  position: string;
-    shortListed: "YES" | "NO" | "PENDING" | "";
-  location: string;
-=======
  search?: string;
   location?: string;
   position?: string;
   shortListed?: "YES" | "NO";
->>>>>>> e9469c3ec1555d468742279f4427dbbd4f909fc9
 }
 
 
@@ -44,5 +37,5 @@ export const EMPTY_FILTERS: FilterOptions = {
   search: "",
   position: "",
   location: "",
-  shortListed: "",
+  shortListed: undefined,
 };

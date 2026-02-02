@@ -14,6 +14,21 @@ interface CandidateDetailsModalProps {
   onUpdate: () => void;
 }
 
+interface InterviewData {
+  id: number;
+  candidate_id: string;
+  total_experience: string;
+  relevant_experience: string;
+  current_ctc: string;
+  expected_ctc: string;
+  notice_period: string;
+  reason_for_change: string;
+  created_at: string;
+  updated_at: string;
+}
+
+
+
 export default function CandidateDetailsModal({
   candidate,
   isOpen,
@@ -23,6 +38,10 @@ export default function CandidateDetailsModal({
   const [currentCandidate, setCurrentCandidate] = useState(candidate);
   const [notes, setNotes] = useState(candidate.Notes || '');
   const [showConfirm, setShowConfirm] = useState(false);
+  const [interviewData, setInterviewData] = useState<InterviewData | null>(null);
+const [loadingInterview, setLoadingInterview] = useState(false);
+const [interviewError, setInterviewError] = useState(false);
+
   const [pendingAction, setPendingAction] = useState<{
     status: 'YES' | 'NO' | 'PENDING';
     label: string;
@@ -71,6 +90,45 @@ export default function CandidateDetailsModal({
       toast.error('Failed to save notes');
     }
   };
+
+
+  useEffect(() => {
+  if (!isOpen || !currentCandidate?.id) return;
+
+  const fetchInterviewData = async () => {
+    setLoadingInterview(true);
+    setInterviewError(false);
+
+    try {
+      const res = await fetch(
+        'https://n8n.srv982383.hstgr.cloud/webhook/0167ef86-9b5b-4088-a6c5-e3e41737f650',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            id: currentCandidate.Email,
+          }),
+        }
+      );
+
+      if (!res.ok) throw new Error('Failed');
+
+      const data = await res.json();
+      setInterviewData(data);
+    } catch (err) {
+      console.error(err);
+      setInterviewError(true);
+      setInterviewData(null);
+    } finally {
+      setLoadingInterview(false);
+    }
+  };
+
+  fetchInterviewData();
+}, [isOpen, currentCandidate.id]);
+
 
   return (
     <>
@@ -149,6 +207,81 @@ export default function CandidateDetailsModal({
               Save Notes
             </button>
           </div>
+          {/* Interview Details */}
+<div>
+  <h4 className="font-semibold text-gray-900 mb-3">
+    Interview Details
+  </h4>
+
+  {loadingInterview && (
+    <div className="p-4 text-sm text-gray-500 bg-gray-50 rounded-lg">
+      Loading interview data...
+    </div>
+  )}
+
+  {!loadingInterview && (interviewError || !interviewData) && (
+    <div className="p-4 text-sm text-gray-500 bg-gray-50 rounded-lg">
+      No interview data available
+    </div>
+  )}
+
+  {!loadingInterview && interviewData && (
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="p-4 bg-gray-50 rounded-lg border">
+        <p className="text-xs text-gray-500">Candidate ID</p>
+        <p className="text-sm font-medium">{interviewData.candidate_id}</p>
+      </div>
+
+      <div className="p-4 bg-gray-50 rounded-lg border">
+        <p className="text-xs text-gray-500">Total Experience</p>
+        <p className="text-sm font-medium">{interviewData.total_experience}</p>
+      </div>
+
+      <div className="p-4 bg-gray-50 rounded-lg border">
+        <p className="text-xs text-gray-500">Relevant Experience</p>
+        <p className="text-sm font-medium">
+          {interviewData.relevant_experience}
+        </p>
+      </div>
+
+      <div className="p-4 bg-gray-50 rounded-lg border">
+        <p className="text-xs text-gray-500">Current CTC</p>
+        <p className="text-sm font-medium">
+          ₹ {interviewData.current_ctc} LPA
+        </p>
+      </div>
+
+      <div className="p-4 bg-gray-50 rounded-lg border">
+        <p className="text-xs text-gray-500">Expected CTC</p>
+        <p className="text-sm font-medium">
+          ₹ {interviewData.expected_ctc} LPA
+        </p>
+      </div>
+
+      <div className="p-4 bg-gray-50 rounded-lg border">
+        <p className="text-xs text-gray-500">Notice Period</p>
+        <p className="text-sm font-medium">
+          {interviewData.notice_period}
+        </p>
+      </div>
+
+      <div className="md:col-span-2 p-4 bg-gray-50 rounded-lg border">
+        <p className="text-xs text-gray-500">Reason for Change</p>
+        <p className="text-sm font-medium">
+          {interviewData.reason_for_change}
+        </p>
+      </div>
+
+      <div className="md:col-span-2 p-4 bg-blue-50 rounded-lg border border-blue-200">
+        <p className="text-xs text-blue-600">Date of Interview</p>
+        <p className="text-sm font-semibold text-blue-900">
+          {new Date(interviewData.updated_at).toLocaleDateString()}
+        </p>
+      </div>
+    </div>
+  )}
+</div>
+
 
           {/* Action Buttons */}
           <div className="pt-4 border-t border-gray-200">

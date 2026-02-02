@@ -27,7 +27,7 @@ export default function Dashboard() {
   {
     search: "",
     position: "",
-    shortListed: "",
+    shortListed: undefined,
     location: "",
   },
   undefined,

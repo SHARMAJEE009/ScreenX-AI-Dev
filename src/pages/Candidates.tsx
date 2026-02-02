@@ -9,15 +9,12 @@ import EmptyState from '@/components/EmptyState';
 import CandidateDetailsModal from '@/components/CandidateDetailsModal';
 import { toast } from '@/utils/toast';
 
-<<<<<<< HEAD
-=======
 // type FilterOptions = {
 //   search?: string;
 //   position?: string;
 //   shortListed?: string;
 //   location?: string;
 // };
->>>>>>> e9469c3ec1555d468742279f4427dbbd4f909fc9
 
 
 export default function Candidates() {
@@ -196,9 +193,9 @@ export default function Candidates() {
                       </td>
                       <td className="px-6 py-4 max-w-xs">
                         <div className="text-sm text-gray-600">
-                          {candidate.Reason.length > 100 ? (
+                          {(candidate.Reason?.length || 0) > 100 ? (
                             <>
-                              <span>{candidate.Reason.substring(0, 100)}...</span>
+                              <span>{candidate.Reason?.substring(0, 100)}...</span>
                               <button
                                 onClick={() => handleViewDetails(candidate)}
                                 className="ml-2 text-primary-600 hover:text-primary-700 font-medium"
@@ -207,7 +204,7 @@ export default function Candidates() {
                               </button>
                             </>
                           ) : (
-                            <span>{candidate.Reason}</span>
+                            <span>{candidate.Reason || '-'}</span>
                           )}
                         </div>
                       </td>

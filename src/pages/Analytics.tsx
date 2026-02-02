@@ -87,28 +87,6 @@ export default function Analytics() {
           </h3>
           <ResponsiveContainer width="100%" height={300}>
             <PieChart>
-<<<<<<< HEAD
-              <Pie
-                data={analytics.shortlistedVsRejected}
-                cx="50%"
-                cy="50%"
-                labelLine={false}
-                label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
-                outerRadius={100}
-                fill="#8884d8"
-                dataKey="count"
-              >
-                {analytics.shortlistedVsRejected.map((entry, index) => (
-                 <>
-                 <p className=''>
-                  {entry.status}: {entry.count}
-                 </p>
-                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                 </>
-
-                ))}
-              </Pie>
-=======
              <Pie
   data={analytics.shortlistedVsRejected}
   cx="50%"
@@ -127,7 +105,6 @@ export default function Analytics() {
     />
   ))}
 </Pie>
->>>>>>> e9469c3ec1555d468742279f4427dbbd4f909fc9
               <Tooltip />
             </PieChart>
           </ResponsiveContainer>
